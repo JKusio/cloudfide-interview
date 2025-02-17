@@ -1,7 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { BinanceModule } from './binance/binance.module';
 import { ConfigModule } from '@nestjs/config';
 import { AnalyticsModule } from './analytics/analytics.module';
 
@@ -10,10 +7,9 @@ import { AnalyticsModule } from './analytics/analytics.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    BinanceModule,
     AnalyticsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
