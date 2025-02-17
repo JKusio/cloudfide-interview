@@ -1,5 +1,11 @@
 Hi! To start the project install all dependencies and run `npm run start:dev`
 
+To run the app you need `.env` file with this content:
+
+```
+BINANCE_API_URL="https://api.binance.com"
+```
+
 To test run `npm run test`.
 
 It's simple code as there was not much time to make it nicer :)
