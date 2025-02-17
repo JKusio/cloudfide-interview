@@ -13,7 +13,7 @@ export class AppController {
   @Get()
   async getHello(): Promise<string> {
     const now = new Date();
-    const sevenDaysAgo = sub(now, { days: 7 });
+    const sevenDaysAgo = sub(now, { minutes: 30 });
 
     await this.binanceService.getHistoricalMarketData({
       symbol: 'BTCUSDT',
