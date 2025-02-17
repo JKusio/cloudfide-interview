@@ -20,6 +20,15 @@ export class AnalyticsService {
       endTime: new Date(dto.endTime),
     });
 
+    if (historicalData.length === 0) {
+      return {
+        symbol: dto.symbol,
+        lowestPrice: null,
+        topPrice: null,
+        periods: [],
+      };
+    }
+
     let topPrice = historicalData[0].price;
     let lowestPrice = historicalData[0].price;
     const periods: Array<PeriodDto> = [];
@@ -55,25 +64,25 @@ export class AnalyticsService {
           if (price !== periodStartPrice) {
             periods.push({
               startPrice: periodStartPrice,
-              endPrice: price,
+              endPrice: previousPrice,
               startTime: periodStartTime,
-              endTime: timestamp,
+              endTime: previousTimestamp,
               periodType,
             });
 
             periodType =
               price > periodStartPrice ? PeriodType.INC : PeriodType.DEC;
 
-            periodStartPrice = price;
-            periodStartTime = timestamp;
+            periodStartPrice = previousPrice;
+            periodStartTime = previousTimestamp;
           }
         } else if (periodType === PeriodType.INC) {
           if (price <= previousPrice) {
             periods.push({
               startPrice: periodStartPrice,
-              endPrice: price,
+              endPrice: previousPrice,
               startTime: periodStartTime,
-              endTime: timestamp,
+              endTime: previousTimestamp,
               periodType,
             });
 
@@ -87,9 +96,9 @@ export class AnalyticsService {
           if (price >= previousPrice) {
             periods.push({
               startPrice: periodStartPrice,
-              endPrice: price,
+              endPrice: previousPrice,
               startTime: periodStartTime,
-              endTime: timestamp,
+              endTime: previousTimestamp,
               periodType,
             });
 
@@ -105,6 +114,14 @@ export class AnalyticsService {
       previousPrice = price;
       previousTimestamp = timestamp;
     }
+
+    periods.push({
+      startPrice: periodStartPrice,
+      endPrice: previousPrice,
+      startTime: periodStartTime,
+      endTime: previousTimestamp,
+      periodType: periodType!,
+    });
 
     return {
       symbol: dto.symbol,

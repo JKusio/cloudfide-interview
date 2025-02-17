@@ -14,7 +14,7 @@ export type PeriodDto = {
 
 export type AnalysisResultDto = {
   symbol: string;
-  topPrice: string;
-  lowestPrice: string;
+  topPrice: string | null;
+  lowestPrice: string | null;
   periods: Array<PeriodDto>;
 };
