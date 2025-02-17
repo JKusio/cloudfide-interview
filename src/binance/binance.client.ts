@@ -41,8 +41,8 @@ export class BinanceClient {
         >(`${this.baseUrl}/api/v3/aggTrades`, {
           params: {
             symbol,
-            startTime,
-            endTime,
+            startTime: startTime?.getTime(),
+            endTime: endTime?.getTime(),
             limit,
             fromId,
           },
